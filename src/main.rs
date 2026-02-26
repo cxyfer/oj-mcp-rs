@@ -1,4 +1,5 @@
 mod client;
+mod convert;
 mod error;
 mod models;
 
