@@ -107,6 +107,7 @@ jobs:
   publish-npm-base:
     name: Publish oj-mcp-rs
     needs: publish-npm-binaries
+    if: always() && (needs.publish-npm-binaries.result == 'success' || needs.publish-npm-binaries.result == 'skipped')
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
