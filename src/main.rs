@@ -2,8 +2,13 @@ mod client;
 mod convert;
 mod error;
 mod models;
+mod tools;
 
 use clap::Parser;
+use rmcp::ServiceExt;
+
+use crate::client::OjClient;
+use crate::tools::OjServer;
 
 #[derive(Parser)]
 #[command(version)]
@@ -70,7 +75,19 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         tracing::info!("token: not configured");
     }
 
-    // TODO: build OjClient, OjServer, start transport
+    let client = match OjClient::new(base_url, cli.token) {
+        Ok(c) => c,
+        Err(e) => {
+            eprintln!("error: {e}");
+            std::process::exit(1);
+        }
+    };
+    let server = OjServer::new(client);
+    let service = server
+        .serve(rmcp::transport::io::stdio())
+        .await
+        .inspect_err(|e| tracing::error!("serving error: {e}"))?;
+    service.waiting().await?;
 
     Ok(())
 }
