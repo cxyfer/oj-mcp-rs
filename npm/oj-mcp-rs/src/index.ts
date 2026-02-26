@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { spawnSync } from "child_process";
 
 const PLATFORM_MAP: Record<string, string> = {

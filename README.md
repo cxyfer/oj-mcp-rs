@@ -77,6 +77,61 @@ With authentication:
 }
 ```
 
+### Cursor
+
+Add to `~/.cursor/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "oj": {
+      "command": "npx",
+      "args": ["-y", "oj-mcp-rs", "--base-url", "https://craboj.zeabur.app"]
+    }
+  }
+}
+```
+
+### VS Code
+
+Add to `.vscode/mcp.json` in your workspace:
+
+```json
+{
+  "servers": {
+    "oj": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "oj-mcp-rs", "--base-url", "https://craboj.zeabur.app"]
+    }
+  }
+}
+```
+
+## Examples
+
+Once connected, you can use natural language to interact with online judge data:
+
+```
+What is today's LeetCode daily challenge?
+```
+
+```
+Get LeetCode problem 1. Two Sum
+```
+
+```
+Find problems similar to LeetCode 146 LRU Cache
+```
+
+```
+What is this problem? https://leetcode.com/problems/median-of-two-sorted-arrays/
+```
+
+```
+Show backend platform support statistics
+```
+
 ## License
 
 MIT

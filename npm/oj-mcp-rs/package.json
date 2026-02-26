@@ -10,11 +10,11 @@
     "typescript": "^5.0.0"
   },
   "optionalDependencies": {
-    "oj-mcp-rs-linux-x64": "0.1.0",
-    "oj-mcp-rs-linux-arm64": "0.1.0",
-    "oj-mcp-rs-darwin-x64": "0.1.0",
-    "oj-mcp-rs-darwin-arm64": "0.1.0",
-    "oj-mcp-rs-windows-x64": "0.1.0",
-    "oj-mcp-rs-windows-arm64": "0.1.0"
+    "oj-mcp-rs-linux-x64": "0.0.0",
+    "oj-mcp-rs-linux-arm64": "0.0.0",
+    "oj-mcp-rs-darwin-x64": "0.0.0",
+    "oj-mcp-rs-darwin-arm64": "0.0.0",
+    "oj-mcp-rs-windows-x64": "0.0.0",
+    "oj-mcp-rs-windows-arm64": "0.0.0"
   }
 }
