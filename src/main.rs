@@ -1,3 +1,4 @@
+mod client;
 mod error;
 
 use clap::Parser;
