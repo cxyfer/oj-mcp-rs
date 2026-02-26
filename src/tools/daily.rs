@@ -50,7 +50,10 @@ pub async fn run(client: &OjClient, params: DailyParams) -> Result<CallToolResul
             }
             d
         }
-        None => chrono::Utc::now().date_naive().format("%Y-%m-%d").to_string(),
+        None => chrono::Utc::now()
+            .date_naive()
+            .format("%Y-%m-%d")
+            .to_string(),
     };
 
     let path = format!("/api/v1/daily?domain={domain}&date={date}");

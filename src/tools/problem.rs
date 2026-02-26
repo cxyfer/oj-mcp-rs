@@ -11,7 +11,9 @@ use crate::models::Problem;
 pub struct GetProblemParams {
     #[schemars(description = "Problem source: leetcode, codeforces, atcoder, or luogu")]
     pub source: String,
-    #[schemars(description = "Problem ID on the platform. Examples: '1' or 'two-sum' (leetcode), '1A' (codeforces), 'abc001_1' (atcoder), 'P1001' (luogu)")]
+    #[schemars(
+        description = "Problem ID on the platform. Examples: '1' or 'two-sum' (leetcode), '1A' (codeforces), 'abc001_1' (atcoder), 'P1001' (luogu)"
+    )]
     pub id: String,
 }
 

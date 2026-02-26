@@ -10,15 +10,21 @@ use crate::models::SimilarResponse;
 #[derive(Deserialize, schemars::JsonSchema)]
 pub struct SimilarParams {
     #[serde(default)]
-    #[schemars(description = "Problem source: leetcode, codeforces, atcoder, or luogu (required for ID-based search)")]
+    #[schemars(
+        description = "Problem source: leetcode, codeforces, atcoder, or luogu (required for ID-based search)"
+    )]
     pub source: Option<String>,
 
     #[serde(default)]
-    #[schemars(description = "Problem ID on the platform, e.g. '1' (leetcode), '1A' (codeforces), 'abc001_1' (atcoder), 'P1001' (luogu). Required for ID-based search")]
+    #[schemars(
+        description = "Problem ID on the platform, e.g. '1' (leetcode), '1A' (codeforces), 'abc001_1' (atcoder), 'P1001' (luogu). Required for ID-based search"
+    )]
     pub id: Option<String>,
 
     #[serde(default)]
-    #[schemars(description = "Text query for semantic search (3-2000 chars, takes priority over source+id)")]
+    #[schemars(
+        description = "Text query for semantic search (3-2000 chars, takes priority over source+id)"
+    )]
     pub query: Option<String>,
 
     #[serde(default)]
@@ -30,7 +36,9 @@ pub struct SimilarParams {
     pub threshold: Option<f64>,
 
     #[serde(default)]
-    #[schemars(description = "Comma-separated platform filter (e.g. 'leetcode,codeforces,atcoder,luogu')")]
+    #[schemars(
+        description = "Comma-separated platform filter (e.g. 'leetcode,codeforces,atcoder,luogu')"
+    )]
     pub source_filter: Option<String>,
 }
 
@@ -54,20 +62,14 @@ pub async fn run(client: &OjClient, params: SimilarParams) -> Result<CallToolRes
     let path = if !trimmed_query.is_empty() {
         let len = trimmed_query.chars().count();
         if len < 3 || len > 2000 {
-            return Ok(domain_error(
-                "query must be between 3 and 2000 characters",
-            ));
+            return Ok(domain_error("query must be between 3 and 2000 characters"));
         }
         format!(
             "/api/v1/similar?q={}&{qs}",
             urlencoding::encode(trimmed_query)
         )
     } else {
-        let source = params
-            .source
-            .as_deref()
-            .map(str::trim)
-            .unwrap_or("");
+        let source = params.source.as_deref().map(str::trim).unwrap_or("");
         let id = params.id.as_deref().map(str::trim).unwrap_or("");
         if source.is_empty() || id.is_empty() {
             return Ok(domain_error(

@@ -7,7 +7,7 @@ mod status;
 use rmcp::handler::server::tool::ToolRouter;
 use rmcp::handler::server::wrapper::Parameters;
 use rmcp::model::*;
-use rmcp::{tool, tool_handler, tool_router, ServerHandler};
+use rmcp::{ServerHandler, tool, tool_handler, tool_router};
 
 use crate::client::OjClient;
 
@@ -26,7 +26,9 @@ impl OjServer {
         }
     }
 
-    #[tool(description = "Preferred way to look up a problem. Accepts a URL, problem slug, or prefixed ID and returns the full problem (title, difficulty, tags, and description). Supports LeetCode, Codeforces, AtCoder, and Luogu. Use this when the input format is uncertain; use get_problem when source and ID are already known.")]
+    #[tool(
+        description = "Preferred way to look up a problem. Accepts a URL, problem slug, or prefixed ID and returns the full problem (title, difficulty, tags, and description). Supports LeetCode, Codeforces, AtCoder, and Luogu. Use this when the input format is uncertain; use get_problem when source and ID are already known."
+    )]
     async fn resolve_problem(
         &self,
         params: Parameters<resolve::ResolveParams>,
@@ -34,12 +36,16 @@ impl OjServer {
         resolve::run(&self.client, params.0).await
     }
 
-    #[tool(description = "Get problem counts and indexing coverage for each platform (LeetCode, Codeforces, AtCoder, Luogu). Returns total problems, missing content count, and un-embedded count per platform.")]
+    #[tool(
+        description = "Get problem counts and indexing coverage for each platform (LeetCode, Codeforces, AtCoder, Luogu). Returns total problems, missing content count, and un-embedded count per platform."
+    )]
     async fn get_platform_status(&self) -> Result<CallToolResult, ErrorData> {
         status::run(&self.client).await
     }
 
-    #[tool(description = "Get a specific problem by source and ID. Returns the full problem including title, difficulty, tags, and description. Supports LeetCode, Codeforces, AtCoder, and Luogu. Use resolve_problem instead when the input is a URL or the ID format is uncertain.")]
+    #[tool(
+        description = "Get a specific problem by source and ID. Returns the full problem including title, difficulty, tags, and description. Supports LeetCode, Codeforces, AtCoder, and Luogu. Use resolve_problem instead when the input is a URL or the ID format is uncertain."
+    )]
     async fn get_problem(
         &self,
         params: Parameters<problem::GetProblemParams>,
@@ -47,7 +53,9 @@ impl OjServer {
         problem::run(&self.client, params.0).await
     }
 
-    #[tool(description = "Get the LeetCode daily challenge problem. Returns the full problem including title, difficulty, tags, and description. Defaults to today (UTC) on leetcode.com; optionally specify a date or the 'cn' domain for leetcode.cn.")]
+    #[tool(
+        description = "Get the LeetCode daily challenge problem. Returns the full problem including title, difficulty, tags, and description. Defaults to today (UTC) on leetcode.com; optionally specify a date or the 'cn' domain for leetcode.cn."
+    )]
     async fn get_daily_challenge(
         &self,
         params: Parameters<daily::DailyParams>,
@@ -55,7 +63,9 @@ impl OjServer {
         daily::run(&self.client, params.0).await
     }
 
-    #[tool(description = "Find similar problems by problem ID or free-text query across LeetCode, Codeforces, AtCoder, and Luogu. Returns a ranked list with similarity scores. Provide either a text query, or a source + ID pair.")]
+    #[tool(
+        description = "Find similar problems by problem ID or free-text query across LeetCode, Codeforces, AtCoder, and Luogu. Returns a ranked list with similarity scores. Provide either a text query, or a source + ID pair."
+    )]
     async fn find_similar_problems(
         &self,
         params: Parameters<similar::SimilarParams>,
@@ -69,7 +79,9 @@ impl ServerHandler for OjServer {
     fn get_info(&self) -> ServerInfo {
         ServerInfo {
             capabilities: ServerCapabilities {
-                tools: Some(ToolsCapability { list_changed: Some(false) }),
+                tools: Some(ToolsCapability {
+                    list_changed: Some(false),
+                }),
                 ..Default::default()
             },
             server_info: Implementation {

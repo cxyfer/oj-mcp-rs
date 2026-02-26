@@ -9,7 +9,9 @@ use crate::models::ResolveResponse;
 
 #[derive(Deserialize, schemars::JsonSchema)]
 pub struct ResolveParams {
-    #[schemars(description = "A problem URL, slug, or prefixed ID. Examples: 'https://leetcode.com/problems/two-sum', 'https://codeforces.com/problemset/problem/1/A', 'leetcode/two-sum', 'cf1A', 'P1001'")]
+    #[schemars(
+        description = "A problem URL, slug, or prefixed ID. Examples: 'https://leetcode.com/problems/two-sum', 'https://codeforces.com/problemset/problem/1/A', 'leetcode/two-sum', 'cf1A', 'P1001'"
+    )]
     pub query: String,
 }
 
@@ -29,7 +31,7 @@ pub async fn run(client: &OjClient, params: ResolveParams) -> Result<CallToolRes
         .map_err(|e| protocol_error(format!("invalid JSON: {e}")))?;
 
     let md = format_problem(&parsed.problem);
-    Ok(CallToolResult::success(vec![
-        rmcp::model::Content::text(truncate_output(md)),
-    ]))
+    Ok(CallToolResult::success(vec![rmcp::model::Content::text(
+        truncate_output(md),
+    )]))
 }

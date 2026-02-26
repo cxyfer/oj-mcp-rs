@@ -1,6 +1,6 @@
 use std::time::Duration;
 
-use reqwest::header::{HeaderMap, HeaderValue, AUTHORIZATION, CONTENT_TYPE};
+use reqwest::header::{AUTHORIZATION, CONTENT_TYPE, HeaderMap, HeaderValue};
 use rmcp::model::ErrorData;
 
 use crate::error::protocol_error;
@@ -52,8 +52,7 @@ impl OjClient {
             .and_then(|v| v.to_str().ok())
             .is_some_and(|ct| {
                 let ct = ct.to_ascii_lowercase();
-                ct.starts_with("application/json")
-                    || ct.starts_with("application/problem+json")
+                ct.starts_with("application/json") || ct.starts_with("application/problem+json")
             });
 
         const MAX_BODY: usize = 1_048_576;
@@ -76,6 +75,10 @@ impl OjClient {
         }
 
         let body = String::from_utf8_lossy(&buf).into_owned();
-        Ok(RawResponse { status, body, is_json })
+        Ok(RawResponse {
+            status,
+            body,
+            is_json,
+        })
     }
 }

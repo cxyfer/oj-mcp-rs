@@ -20,8 +20,7 @@ struct Cli {
 }
 
 fn validate_base_url(raw: &str) -> Result<String, String> {
-    let parsed =
-        url::Url::parse(raw).map_err(|e| format!("invalid URL: {e}"))?;
+    let parsed = url::Url::parse(raw).map_err(|e| format!("invalid URL: {e}"))?;
 
     match parsed.scheme() {
         "http" | "https" => {}

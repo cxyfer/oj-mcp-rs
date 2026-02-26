@@ -6,9 +6,9 @@ fn looks_like_html(s: &str) -> bool {
         return false;
     }
     const TAGS: &[&str] = &[
-        "<p>", "<p ", "<div", "<ul", "<ol", "<li", "<table", "<br", "<h1", "<h2",
-        "<h3", "<h4", "<h5", "<h6", "<pre>", "<pre ", "<code>", "<code ",
-        "<strong", "<em>", "<em ", "<span", "<img", "<a ",
+        "<p>", "<p ", "<div", "<ul", "<ol", "<li", "<table", "<br", "<h1", "<h2", "<h3", "<h4",
+        "<h5", "<h6", "<pre>", "<pre ", "<code>", "<code ", "<strong", "<em>", "<em ", "<span",
+        "<img", "<a ",
     ];
     let lower = trimmed.to_ascii_lowercase();
     TAGS.iter().any(|tag| lower.contains(tag))
