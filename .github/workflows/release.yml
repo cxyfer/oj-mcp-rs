@@ -1,0 +1,123 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  publish-npm-binaries:
+    name: Build ${{ matrix.node_pkg }}
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      matrix:
+        include:
+          - rust_target: x86_64-unknown-linux-gnu
+            runner: ubuntu-22.04
+            node_os: linux
+            node_arch: x64
+            node_pkg: oj-mcp-rs-linux-x64
+            use_cross: false
+            ext: ""
+          - rust_target: aarch64-unknown-linux-gnu
+            runner: ubuntu-22.04
+            node_os: linux
+            node_arch: arm64
+            node_pkg: oj-mcp-rs-linux-arm64
+            use_cross: true
+            ext: ""
+          - rust_target: x86_64-apple-darwin
+            runner: macos-14
+            node_os: darwin
+            node_arch: x64
+            node_pkg: oj-mcp-rs-darwin-x64
+            use_cross: false
+            ext: ""
+          - rust_target: aarch64-apple-darwin
+            runner: macos-14
+            node_os: darwin
+            node_arch: arm64
+            node_pkg: oj-mcp-rs-darwin-arm64
+            use_cross: false
+            ext: ""
+          - rust_target: x86_64-pc-windows-msvc
+            runner: windows-2022
+            node_os: win32
+            node_arch: x64
+            node_pkg: oj-mcp-rs-windows-x64
+            use_cross: false
+            ext: .exe
+          - rust_target: aarch64-pc-windows-msvc
+            runner: windows-2022
+            node_os: win32
+            node_arch: arm64
+            node_pkg: oj-mcp-rs-windows-arm64
+            use_cross: false
+            ext: .exe
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.rust_target }}
+      - name: Install cross
+        if: matrix.use_cross
+        run: cargo install cross --locked
+      - name: Build
+        run: |
+          if [ "${{ matrix.use_cross }}" = "true" ]; then
+            cross build --release --target ${{ matrix.rust_target }}
+          else
+            cargo build --release --target ${{ matrix.rust_target }}
+          fi
+        shell: bash
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          registry-url: "https://registry.npmjs.org"
+      - name: Extract version
+        id: version
+        run: echo "version=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+        shell: bash
+      - name: Prepare npm package
+        run: |
+          mkdir -p pkg/bin
+          sed -e 's/${node_pkg}/${{ matrix.node_pkg }}/' \
+              -e 's/${node_version}/${{ steps.version.outputs.version }}/' \
+              -e 's/${node_os}/${{ matrix.node_os }}/' \
+              -e 's/${node_arch}/${{ matrix.node_arch }}/' \
+              npm/package.json.tmpl > pkg/package.json
+          cp target/${{ matrix.rust_target }}/release/oj-mcp-rs${{ matrix.ext }} pkg/bin/
+        shell: bash
+      - name: Publish platform package
+        run: npm publish --access public
+        working-directory: pkg
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  publish-npm-base:
+    name: Publish oj-mcp-rs
+    needs: publish-npm-binaries
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          registry-url: "https://registry.npmjs.org"
+      - name: Extract version
+        id: version
+        run: echo "version=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+      - name: Build and publish
+        working-directory: npm/oj-mcp-rs
+        run: |
+          npm install --save-dev typescript
+          npx tsc
+          npm version --no-git-tag-version ${{ steps.version.outputs.version }}
+          sed -i "s/\"0.0.0\"/\"${{ steps.version.outputs.version }}\"/g" package.json
+          npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
