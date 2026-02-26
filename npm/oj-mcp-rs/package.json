@@ -1,6 +1,6 @@
 {
   "name": "oj-mcp-rs",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "MCP server for Online Judge problem data (oj-api-rs wrapper)",
   "bin": "lib/index.js",
   "engines": { "node": ">=18.0.0" },
