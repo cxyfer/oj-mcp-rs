@@ -15,7 +15,6 @@ pub struct RawResponse {
 pub struct OjClient {
     http: reqwest::Client,
     base_url: String,
-    has_token: bool,
 }
 
 impl OjClient {
@@ -24,7 +23,6 @@ impl OjClient {
             .timeout(Duration::from_secs(30))
             .use_rustls_tls();
 
-        let has_token = token.is_some();
         if let Some(t) = token {
             let mut headers = HeaderMap::new();
             let mut val = HeaderValue::from_str(&format!("Bearer {t}"))
@@ -35,11 +33,7 @@ impl OjClient {
         }
 
         let http = builder.build().expect("failed to build HTTP client");
-        Ok(Self { http, base_url, has_token })
-    }
-
-    pub fn has_token(&self) -> bool {
-        self.has_token
+        Ok(Self { http, base_url })
     }
 
     pub async fn get_raw(&self, path: &str) -> Result<RawResponse, ErrorData> {

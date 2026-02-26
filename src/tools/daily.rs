@@ -75,8 +75,12 @@ pub async fn run(client: &OjClient, params: DailyParams) -> Result<CallToolResul
         return Err(protocol_error("unexpected non-JSON response"));
     }
 
-    let problem: Problem = serde_json::from_str(&resp.body)
+    let mut problem: Problem = serde_json::from_str(&resp.body)
         .map_err(|e| protocol_error(format!("invalid JSON: {e}")))?;
+
+    if problem.source.is_empty() {
+        problem.source = "leetcode".into();
+    }
 
     let md = format_problem(&problem);
     Ok(CallToolResult::success(vec![Content::text(

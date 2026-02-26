@@ -3,6 +3,7 @@ use serde::Deserialize;
 #[derive(Deserialize)]
 pub struct Problem {
     pub id: String,
+    #[serde(default)]
     pub source: String,
     #[serde(default)]
     pub slug: Option<String>,

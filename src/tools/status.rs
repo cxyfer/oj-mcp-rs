@@ -6,12 +6,6 @@ use crate::error::{domain_error, format_api_error, protocol_error};
 use crate::models::StatusResponse;
 
 pub async fn run(client: &OjClient) -> Result<CallToolResult, ErrorData> {
-    if !client.has_token() {
-        return Ok(domain_error(
-            "Authentication required: --token must be provided to use get_platform_status",
-        ));
-    }
-
     let resp = client.get_raw("/status").await?;
 
     if resp.status != 200 {

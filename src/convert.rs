@@ -1,12 +1,29 @@
 use crate::models::{Problem, SimilarResponse, StatusResponse};
 
-pub fn html_to_markdown(html: &str) -> String {
-    if html.trim().is_empty() {
+fn looks_like_html(s: &str) -> bool {
+    let trimmed = s.trim();
+    if !trimmed.contains('<') {
+        return false;
+    }
+    const TAGS: &[&str] = &[
+        "<p>", "<p ", "<div", "<ul", "<ol", "<li", "<table", "<br", "<h1", "<h2",
+        "<h3", "<h4", "<h5", "<h6", "<pre>", "<pre ", "<code>", "<code ",
+        "<strong", "<em>", "<em ", "<span", "<img", "<a ",
+    ];
+    let lower = trimmed.to_ascii_lowercase();
+    TAGS.iter().any(|tag| lower.contains(tag))
+}
+
+pub fn html_to_markdown(content: &str) -> String {
+    if content.trim().is_empty() {
         return "No description available.".into();
     }
-    match std::panic::catch_unwind(|| htmd::convert(html)) {
+    if !looks_like_html(content) {
+        return content.to_owned();
+    }
+    match std::panic::catch_unwind(|| htmd::convert(content)) {
         Ok(Ok(md)) if !md.trim().is_empty() => md,
-        _ => ammonia::clean_text(html),
+        _ => ammonia::clean_text(content),
     }
 }
 
