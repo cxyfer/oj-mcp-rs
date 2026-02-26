@@ -9,12 +9,12 @@ pub struct Rfc7807 {
 }
 
 pub fn format_api_error(status_code: u16, body: &str) -> String {
-    if let Ok(rfc) = serde_json::from_str::<Rfc7807>(body) {
-        if let Some(title) = &rfc.title {
-            let code = rfc.status.unwrap_or(status_code);
-            let detail = rfc.detail.as_deref().unwrap_or_default();
-            return format!("[{code}] {title}: {detail}");
-        }
+    if let Ok(rfc) = serde_json::from_str::<Rfc7807>(body)
+        && let Some(title) = &rfc.title
+    {
+        let code = rfc.status.unwrap_or(status_code);
+        let detail = rfc.detail.as_deref().unwrap_or_default();
+        return format!("[{code}] {title}: {detail}");
     }
     let truncated: String = body.chars().take(500).collect();
     format!("[{status_code}] {truncated}")

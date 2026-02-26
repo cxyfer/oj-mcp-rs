@@ -5,15 +5,11 @@ pub struct Problem {
     pub id: String,
     #[serde(default)]
     pub source: String,
-    #[serde(default)]
-    pub slug: Option<String>,
     pub title: String,
     #[serde(default)]
     pub difficulty: Option<String>,
     #[serde(default)]
     pub ac_rate: Option<f64>,
-    #[serde(default)]
-    pub rating: Option<f64>,
     #[serde(default)]
     pub tags: Option<Vec<String>>,
     #[serde(default)]

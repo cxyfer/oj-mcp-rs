@@ -61,7 +61,7 @@ pub async fn run(client: &OjClient, params: SimilarParams) -> Result<CallToolRes
 
     let path = if !trimmed_query.is_empty() {
         let len = trimmed_query.chars().count();
-        if len < 3 || len > 2000 {
+        if !(3..=2000).contains(&len) {
             return Ok(domain_error("query must be between 3 and 2000 characters"));
         }
         format!(

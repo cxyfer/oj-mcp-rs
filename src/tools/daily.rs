@@ -7,17 +7,12 @@ use crate::convert::{format_problem, truncate_output};
 use crate::error::{domain_error, format_api_error, protocol_error};
 use crate::models::{DailyFetching, Problem};
 
-#[derive(Deserialize, schemars::JsonSchema)]
+#[derive(Deserialize, schemars::JsonSchema, Default)]
 #[serde(rename_all = "lowercase")]
 pub enum Domain {
+    #[default]
     Com,
     Cn,
-}
-
-impl Default for Domain {
-    fn default() -> Self {
-        Self::Com
-    }
 }
 
 impl std::fmt::Display for Domain {
