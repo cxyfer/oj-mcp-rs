@@ -9,7 +9,7 @@ use crate::models::ResolveResponse;
 
 #[derive(Deserialize, schemars::JsonSchema)]
 pub struct ResolveParams {
-    #[schemars(description = "URL, slug, prefixed ID, or bare pattern to resolve")]
+    #[schemars(description = "A problem URL, slug, or prefixed ID. Examples: 'https://leetcode.com/problems/two-sum', 'https://codeforces.com/problemset/problem/1/A', 'leetcode/two-sum', 'cf1A', 'P1001'")]
     pub query: String,
 }
 

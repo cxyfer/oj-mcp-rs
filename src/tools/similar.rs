@@ -10,11 +10,11 @@ use crate::models::SimilarResponse;
 #[derive(Deserialize, schemars::JsonSchema)]
 pub struct SimilarParams {
     #[serde(default)]
-    #[schemars(description = "Problem source (required for ID-based search)")]
+    #[schemars(description = "Problem source: leetcode, codeforces, atcoder, or luogu (required for ID-based search)")]
     pub source: Option<String>,
 
     #[serde(default)]
-    #[schemars(description = "Problem ID (required for ID-based search)")]
+    #[schemars(description = "Problem ID on the platform, e.g. '1' (leetcode), '1A' (codeforces), 'abc001_1' (atcoder), 'P1001' (luogu). Required for ID-based search")]
     pub id: Option<String>,
 
     #[serde(default)]
@@ -30,7 +30,7 @@ pub struct SimilarParams {
     pub threshold: Option<f64>,
 
     #[serde(default)]
-    #[schemars(description = "Comma-separated platform filter (e.g. 'leetcode,codeforces')")]
+    #[schemars(description = "Comma-separated platform filter (e.g. 'leetcode,codeforces,atcoder,luogu')")]
     pub source_filter: Option<String>,
 }
 
