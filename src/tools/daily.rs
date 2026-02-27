@@ -27,11 +27,11 @@ impl std::fmt::Display for Domain {
 #[derive(Deserialize, schemars::JsonSchema)]
 pub struct DailyParams {
     #[serde(default)]
-    #[schemars(description = "LeetCode domain: 'com' (default) or 'cn'")]
+    #[schemars(description = "LeetCode domain: 'com' (default, UTC+0) or 'cn' (UTC+8). Daily challenge switches at 00:00 in respective timezone")]
     pub domain: Option<Domain>,
 
     #[serde(default)]
-    #[schemars(description = "Date in YYYY-MM-DD format (default: today UTC)")]
+    #[schemars(description = "Date in YYYY-MM-DD format (default: today in domain's timezone: UTC+0 for 'com', UTC+8 for 'cn')")]
     pub date: Option<String>,
 }
 

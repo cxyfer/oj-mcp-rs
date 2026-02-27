@@ -54,7 +54,7 @@ impl OjServer {
     }
 
     #[tool(
-        description = "Get the LeetCode daily challenge problem. Returns the full problem including title, difficulty, tags, and description. Defaults to today (UTC) on leetcode.com; optionally specify a date or the 'cn' domain for leetcode.cn."
+        description = "Get the LeetCode daily challenge problem. Returns the full problem including title, difficulty, tags, and description. Defaults to today in domain's timezone (UTC+0 for 'com', UTC+8 for 'cn'). Daily challenge switches at 00:00 in respective timezone."
     )]
     async fn get_daily_challenge(
         &self,
