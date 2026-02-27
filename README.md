@@ -7,7 +7,7 @@
 [![Rust](https://img.shields.io/badge/Rust-1.85%2B-orange.svg?style=flat-square&logo=rust)](https://www.rust-lang.org/)
 [![CI](https://github.com/cxyfer/oj-mcp-rs/actions/workflows/release.yml/badge.svg?branch=main)](https://github.com/cxyfer/oj-mcp-rs/actions)
 
-*An [MCP](https://modelcontextprotocol.io/) server that wraps the [oj-api-rs](https://craboj.zeabur.app) REST API, exposing online judge problem data to LLM clients via stdio transport.*
+*An [MCP](https://modelcontextprotocol.io/) server that wraps the [oj-api-rs](https://github.com/cxyfer/oj-api-rs) REST API, exposing online judge problem data to LLM clients via stdio transport.*
 
 </div>
 
@@ -26,10 +26,13 @@ oj-mcp-rs provides LLM clients with access to online judge problem data from var
 
 ## Installation
 
+> [!NOTE]
+> Replace `YOUR_BASE_URL` with your oj-api-rs instance URL. You can use `https://oj-api.zeabur.app` as a public demo instance.
+
 Run via npx (no installation required):
 
 ```bash
-npx oj-mcp-rs --base-url https://craboj.zeabur.app
+npx oj-mcp-rs --base-url YOUR_BASE_URL
 ```
 
 **Supported platforms:** Linux (x64, arm64) • macOS (x64, arm64) • Windows (x64, arm64)
@@ -48,7 +51,7 @@ Add to your config file:
   "mcpServers": {
     "oj": {
       "command": "npx",
-      "args": ["-y", "oj-mcp-rs", "--base-url", "https://craboj.zeabur.app"]
+      "args": ["-y", "oj-mcp-rs", "--base-url", "YOUR_BASE_URL"]
     }
   }
 }
@@ -61,7 +64,7 @@ With authentication:
   "mcpServers": {
     "oj": {
       "command": "npx",
-      "args": ["-y", "oj-mcp-rs", "--base-url", "https://craboj.zeabur.app", "--token", "YOUR_TOKEN"]
+      "args": ["-y", "oj-mcp-rs", "--base-url", "YOUR_BASE_URL", "--token", "YOUR_TOKEN"]
     }
   }
 }
@@ -78,7 +81,7 @@ Add to `~/.cursor/mcp.json`:
   "mcpServers": {
     "oj": {
       "command": "npx",
-      "args": ["-y", "oj-mcp-rs", "--base-url", "https://craboj.zeabur.app"]
+      "args": ["-y", "oj-mcp-rs", "--base-url", "YOUR_BASE_URL"]
     }
   }
 }
@@ -96,7 +99,7 @@ Add to `.vscode/mcp.json` in your workspace:
     "oj": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "oj-mcp-rs", "--base-url", "https://craboj.zeabur.app"]
+      "args": ["-y", "oj-mcp-rs", "--base-url", "YOUR_BASE_URL"]
     }
   }
 }
@@ -107,7 +110,7 @@ Add to `.vscode/mcp.json` in your workspace:
 <summary><b>Claude Code</b></summary>
 
 ```bash
-claude mcp add --transport stdio oj-mcp-rs -- npx -y oj-mcp-rs --base-url https://craboj.zeabur.app
+claude mcp add --transport stdio oj-mcp-rs -- npx -y oj-mcp-rs --base-url YOUR_BASE_URL
 ```
 </details>
 
@@ -115,7 +118,7 @@ claude mcp add --transport stdio oj-mcp-rs -- npx -y oj-mcp-rs --base-url https:
 <summary><b>Codex</b></summary>
 
 ```bash
-codex mcp add oj-mcp-rs -- npx -y oj-mcp-rs --base-url https://craboj.zeabur.app
+codex mcp add oj-mcp-rs -- npx -y oj-mcp-rs --base-url YOUR_BASE_URL
 ```
 </details>
 
@@ -128,7 +131,7 @@ oj-mcp-rs --base-url <URL> [--token <TOKEN>]
 
 | Argument | Required | Description |
 |----------|----------|-------------|
-| `--base-url` | Yes | oj-api-rs origin (e.g., `https://craboj.zeabur.app`) |
+| `--base-url` | Yes | oj-api-rs origin (e.g., `https://oj-api.zeabur.app`) |
 | `--token` | No | Bearer token for authenticated endpoints |
 | `--version` | - | Print version and exit |
 
