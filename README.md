@@ -3,7 +3,7 @@
 # oj-mcp-rs
 
 [![NPM Version](https://img.shields.io/npm/v/oj-mcp-rs?style=flat-square&color=cb3837&logo=npm)](https://www.npmjs.com/package/oj-mcp-rs)
-[![License](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+[![License](https://img.shields.io/badge/License-GPL%20v3-blue.svg?style=flat-square)](https://www.gnu.org/licenses/gpl-3.0)
 [![Rust](https://img.shields.io/badge/Rust-1.85%2B-orange.svg?style=flat-square&logo=rust)](https://www.rust-lang.org/)
 [![CI](https://github.com/cxyfer/oj-mcp-rs/actions/workflows/release.yml/badge.svg?branch=main)](https://github.com/cxyfer/oj-mcp-rs/actions)
 
@@ -240,4 +240,4 @@ Once connected, you can use natural language to interact with online judge data:
 
 ## License
 
-[MIT](http://opensource.org/licenses/MIT)
+[GPL v3](https://www.gnu.org/licenses/gpl-3.0)
