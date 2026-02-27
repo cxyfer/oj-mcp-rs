@@ -37,6 +37,15 @@ npx oj-mcp-rs --base-url YOUR_BASE_URL
 
 **Supported platforms:** Linux (x64, arm64) • macOS (x64, arm64) • Windows (x64, arm64)
 
+| Argument | Required | Description |
+|----------|----------|-------------|
+| `--base-url` | Yes | oj-api-rs origin (e.g., `https://oj-api.zeabur.app`) |
+| `--token` | No | Bearer token for authenticated endpoints |
+| `--version` | - | Print version and exit |
+
+**Environment Variables:**
+- `RUST_LOG` - Set log level (e.g., `info`, `debug`, `warn`)
+
 ### Client Configuration
 
 <details>
@@ -120,23 +129,6 @@ claude mcp add --transport stdio oj-mcp-rs -- npx -y oj-mcp-rs --base-url YOUR_B
 ```bash
 codex mcp add oj-mcp-rs -- npx -y oj-mcp-rs --base-url YOUR_BASE_URL
 ```
-</details>
-
-<details>
-<summary><b>Command Line Options</b></summary>
-
-```bash
-oj-mcp-rs --base-url <URL> [--token <TOKEN>]
-```
-
-| Argument | Required | Description |
-|----------|----------|-------------|
-| `--base-url` | Yes | oj-api-rs origin (e.g., `https://oj-api.zeabur.app`) |
-| `--token` | No | Bearer token for authenticated endpoints |
-| `--version` | - | Print version and exit |
-
-**Environment Variables:**
-- `RUST_LOG` - Set log level (e.g., `info`, `debug`, `warn`)
 </details>
 
 <details>
