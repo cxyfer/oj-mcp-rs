@@ -11,6 +11,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write
 
 jobs:
   publish-npm-binaries:
@@ -84,6 +85,9 @@ jobs:
         with:
           node-version: "22"
           registry-url: "https://registry.npmjs.org"
+      - name: Upgrade npm for OIDC support
+        run: npm install -g npm@latest
+        shell: bash
       - name: Extract version
         id: version
         run: echo "version=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
@@ -99,10 +103,9 @@ jobs:
           cp target/${{ matrix.rust_target }}/release/oj-mcp-rs${{ matrix.ext }} pkg/bin/
         shell: bash
       - name: Publish platform package
-        run: npm publish --access public
+        run: npm publish --access public --provenance
         working-directory: pkg
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        shell: bash
 
   publish-npm-base:
     name: Publish oj-mcp-rs
@@ -115,6 +118,8 @@ jobs:
         with:
           node-version: "22"
           registry-url: "https://registry.npmjs.org"
+      - name: Upgrade npm for OIDC support
+        run: npm install -g npm@latest
       - name: Extract version
         id: version
         run: |
@@ -130,6 +135,4 @@ jobs:
           npx tsc
           npm version --no-git-tag-version ${{ steps.version.outputs.version }}
           sed -i "s/\"0.0.0\"/\"${{ steps.version.outputs.version }}\"/g" package.json
-          npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          npm publish --access public --provenance

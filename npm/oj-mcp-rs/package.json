@@ -5,6 +5,10 @@
   "bin": "lib/index.js",
   "engines": { "node": ">=18.0.0" },
   "files": ["lib/"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cxyfer/oj-mcp-rs"
+  },
   "devDependencies": {
     "@types/node": "^22.0.0",
     "typescript": "^5.0.0"
