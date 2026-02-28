@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.1.4] - 2026-02-28
+
+### 👷 CI/CD
+
+- Migrate npm publish from `NPM_TOKEN` to OIDC Trusted Publishing with `--provenance`
+
+### 📝 Documentation
+
+- Move CLI options to installation section in README
+
 ## [0.1.2] - 2026-02-27
 
 ### 📝 Documentation
